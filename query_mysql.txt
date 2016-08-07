@@ -1,0 +1,108 @@
+select u.nama as Nama,
+		d.keterangan as 'Dimensi Indikator',
+        i.keterangan,
+        p.nilai,
+        b.keterangan
+
+FROM penilaian p
+JOIN universitas u ON p.kd_univ = u.id
+JOIN indikator i ON i.id = p.kd_indikator
+JOIN dim_ind d ON i.dim = d.id
+JOIN bobot_nilai b ON p.nilai = b.nilai
+ORDER BY p.id
+
+============================================
+
+select u.nama as Nama,
+		d.keterangan as 'Dimensi Indikator',
+        i.keterangan,
+        b.nilai as target,
+        p.nilai,
+        (p.nilai-b.nilai) as gap
+
+FROM penilaian p
+JOIN universitas u ON p.kd_univ = u.id
+JOIN indikator i ON i.id = p.kd_indikator
+JOIN dim_ind d ON i.dim = d.id
+JOIN bobot_nilai b ON b.nilai=4
+
+ORDER BY p.id
+
+============================================
+
+select u.nama as Nama,
+		d.keterangan as 'Dimensi Indikator',
+        i.keterangan,
+        bg.gap as GAP,
+        bg.keterangan as bobot
+FROM penilaian p
+JOIN universitas u ON p.kd_univ = u.id
+JOIN indikator i ON i.id = p.kd_indikator
+JOIN dim_ind d ON i.dim = d.id
+JOIN bobot_gap bg ON bg.gap=(p.nilai-4)
+
+ORDER BY p.id
+
+============================================
+SHOW NILAI INDIKATOR THOK
+
+select u.nama as Nama,
+        i.keterangan,
+        p.nilai
+FROM penilaian p
+
+JOIN universitas u ON p.kd_univ = u.id
+JOIN indikator i ON i.id = p.kd_indikator
+
+ORDER BY p.id
+
+============================================
+
+SHOW SECOND CORE FACTOR
+
+SELECT
+  b.nama AS nama,
+  c.keterangan as Aspek,
+  SUM(IF(d.kelompok='core',e.bobot,0))/SUM(IF(d.kelompok='core',1,0)) AS core,
+  SUM(IF(d.kelompok='secondary',e.bobot,0))/SUM(IF(d.kelompok='secondary',1,0)) AS secondary
+FROM penilaian a
+JOIN universitas b ON a.kd_univ = b.id
+JOIN indikator d ON a.kd_indikator = d.id
+JOIN dim_ind c ON d.dim = c.id
+JOIN bobot_gap e ON e.gap=(a.nilai-4)
+GROUP BY b.nama,c.keterangan
+ORDER BY b.nama,c.keterangan
+
+============================================
+
+HASIL !!
+
+SELECT
+  f.nama,
+  SUM(IF(f.id_aspek=1,f.nilai,0)) AS Ni,
+  SUM(IF(f.id_aspek=2,f.nilai,0)) AS Ns,
+  SUM(IF(f.id_aspek=3,f.nilai,0)) AS Np,
+  (
+    SUM(IF(f.id_aspek=1,f.nilai*f.persen,0))+
+    SUM(IF(f.id_aspek=2,f.nilai*f.persen,0))+
+    SUM(IF(f.id_aspek=3,f.nilai*f.persen,0))
+  ) AS Hasil
+FROM
+  (
+    SELECT
+      b.nama,
+      c.id as id_aspek,
+      c.prosentase/100 AS persen,
+      (SUM(IF(d.kelompok='core',e.bobot,0))/SUM(IF(d.kelompok='core',1,0))*0.6+
+       SUM(IF(d.kelompok='secondary',e.bobot,0))/SUM(IF(d.kelompok='secondary',1,0))*0.4) AS nilai
+    FROM
+      penilaian a
+JOIN universitas b ON a.kd_univ = b.id
+JOIN indikator d ON a.kd_indikator = d.id
+JOIN dim_ind c ON d.dim = c.id
+JOIN bobot_gap e ON e.gap=(a.nilai-4)
+    GROUP BY b.nama, c.keterangan
+    ORDER BY b.nama
+  ) f
+GROUP BY f.nama
+ORDER BY Hasil DESC;
