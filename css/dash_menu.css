@@ -22,6 +22,10 @@ li,ul{
     display: table;
 }
 
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+  background-color: #33ddff;
+}
+
 .login-header {
     display: inline-block;
     width: 100%;

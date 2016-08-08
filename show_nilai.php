@@ -12,7 +12,9 @@ $database = new Config();
 $db = $database->getConnection();
 $table = 'universitas';
 $product = new Data($db,$table);
-
+$query = "SELECT * FROM indikator";
+$stmt2 = $db -> prepare($query);
+$stmt2->execute();
 $stmt = $product->show_nilai($from_record_num, $records_per_page);
 $num = $stmt->rowCount();
 $i=($page-1)*10;
@@ -24,7 +26,7 @@ $i=($page-1)*10;
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="author" content="M Adi Darmawan">
     <title>SPK Universitas Terbaik</title>
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/dash_menu.css" rel="stylesheet">
@@ -46,8 +48,8 @@ $i=($page-1)*10;
                         <li><a href="add.php"><i class="fa fa-plus" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Tambah Data</span></a></li>
                         <li><a href="show_list.php"><i class="fa fa-bar-chart" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Data Universitas</span></a></li>
                         <li class="active"><a href="#"><i class="fa fa-table" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Data Penilaian</span></a></li>
-                        <li><a href="#"><i class="fa fa-user" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Gap</span></a></li>
-                        <li><a href="#"><i class="fa fa-calendar" aria-hidden="true"></i><span class="hidden-xs hidden-sm">About Us</span></a></li>
+                        <li><a href="gapfactor.php"><i class="fa fa-user" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Gap</span></a></li>
+                        <li><a href="abouts.php"><i class="fa fa-calendar" aria-hidden="true"></i><span class="hidden-xs hidden-sm">About Us</span></a></li>
                         <li><a href="#"><i class="fa fa-cog" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Setting</span></a></li>
                     </ul>
                 </div>
@@ -74,7 +76,6 @@ $i=($page-1)*10;
                         <div class="col-md-5">
                             <div class="header-rightside">
                                 <ul class="list-inline header-top pull-right">
-                                    <li class="hidden-xs"><a href="#" class="add-project" data-toggle="modal" data-target="#add_project">Add Project</a></li>
                                     <li><a href="#"><i class="fa fa-envelope" aria-hidden="true"></i></a></li>
                                     <li>
                                         <a href="#" class="icon-info">
@@ -104,6 +105,37 @@ $i=($page-1)*10;
                         </div>
                     </header>
                 </div>
+                <div id="show-indikator" class="modal fade" role="dialog">
+                  <div class="modal-dialog">
+                  <div class="modal-content">
+                        <div class="modal-header login-header">
+                            <button type="button" class="close" data-dismiss="modal">×</button>
+                            <h4 class="modal-title">Indikator</h4>
+                        </div>
+                      <div class="modal-body">
+                          <div class="row">
+                                <div class="well">
+                                  <ul class="list-unstyled" style="line-height: 2">
+                                    <?php
+                                    while ($rox=$stmt2->fetch(PDO::FETCH_ASSOC)){
+                                    extract($rox);
+                                    ?>
+                                      <li><span class='fa fa-check text-success'></span>
+                                        <?php echo "i{$id} : {$keterangan}"; ?>
+                                      </li>
+                                      <?php
+                                      }
+                                      ?>
+                                  </ul>
+                              </div>
+                      </div>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="cancel" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
                 <div class="user-dashboard">
                     <div class="container-fluid xyz">
                     <div class="row">
@@ -112,7 +144,7 @@ $i=($page-1)*10;
                       <?php
                       if($num>0){
                       ?>
-                       <table class="table table-bordered table-hover table-striped">
+                       <table class="table table-bordered table-striped table-hover">
                        <caption>Data Nilai Universitas</caption>
                        <thead>
                               <tr>
@@ -181,7 +213,11 @@ $i=($page-1)*10;
                        </table>
                       <?php
                       $page_dom = "show_nilai.php";
-                      include_once 'includes/pagination.inc.php';
+                      include_once 'includes/pagination.inc.php';?>
+                      <div class="hidden-xs">
+                        <a href="#" class="add-project" data-toggle="modal" data-target="#show-indikator">Indikator</a>
+                      </div>
+                      <?php
                       }
                       else{
                       ?>
@@ -193,6 +229,7 @@ $i=($page-1)*10;
                       }
                       ?>
                     </div>
+
                   </div>
 
                     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

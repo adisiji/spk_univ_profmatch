@@ -1,3 +1,20 @@
+<?php
+$page = isset($_GET['page']) ? $_GET['page'] : 1;
+
+$records_per_page = 10;
+
+$from_record_num = ($records_per_page * $page) - $records_per_page;
+
+include_once 'includes/config.php';
+include_once 'includes/langkah.inc.php';
+$database = new Config();
+$db = $database->getConnection();
+$table = 'universitas';
+$product = new Langkah($db,$table);
+$stmt = $product->hasil($from_record_num, $records_per_page);
+$num = $stmt->rowCount();
+$i=($page-1)*10;
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,7 +22,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="author" content="M Adi Darmawan">
     <title>SPK Universitas Terbaik</title>
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/dash_menu.css" rel="stylesheet">
@@ -27,8 +44,8 @@
                         <li><a href="add.php"><i class="fa fa-plus" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Tambah Data</span></a></li>
                         <li><a href="show_list.php"><i class="fa fa-bar-chart" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Data Universitas</span></a></li>
                         <li><a href="show_nilai.php"><i class="fa fa-table" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Data Penilaian</span></a></li>
-                        <li><a href="#"><i class="fa fa-user" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Gap</span></a></li>
-                        <li><a href="#"><i class="fa fa-calendar" aria-hidden="true"></i><span class="hidden-xs hidden-sm">About Us</span></a></li>
+                        <li><a href="gapfactor.php"><i class="fa fa-user" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Gap</span></a></li>
+                        <li><a href="abouts.php"><i class="fa fa-calendar" aria-hidden="true"></i><span class="hidden-xs hidden-sm">About Us</span></a></li>
                         <li><a href="#"><i class="fa fa-cog" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Setting</span></a></li>
                     </ul>
                 </div>
@@ -55,7 +72,7 @@
                         <div class="col-md-5">
                             <div class="header-rightside">
                                 <ul class="list-inline header-top pull-right">
-                                    <li class="hidden-xs"><a href="#" class="add-project" data-toggle="modal" data-target="#add_project">Add Project</a></li>
+                                    <li class="hidden-xs"><a href="add.php" class="add-project">Add Data</a></li>
                                     <li><a href="#"><i class="fa fa-envelope" aria-hidden="true"></i></a></li>
                                     <li>
                                         <a href="#" class="icon-info">
@@ -90,41 +107,53 @@
                     <div class="row">
                       <!--isi nyda tari di bawah-->
                       <!-- EDIT HERE-->
-                      <h1>Hello, JS</h1>
-                        <div class="col-md-5 col-sm-5 col-xs-12 gutter">
-                            <div class="sales">
-                                <h2>Your Sale</h2>
-
-                                <div class="btn-group">
-                                    <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <span>Period:</span> Last Year
-                                    </button>
-                                    <div class="dropdown-menu">
-                                        <a href="#">2012</a>
-                                        <a href="#">2014</a>
-                                        <a href="#">2015</a>
-                                        <a href="#">2016</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-7 col-sm-7 col-xs-12 gutter">
-
-                            <div class="sales report">
-                                <h2>Report</h2>
-                                <div class="btn-group">
-                                    <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <span>Period:</span> Last Year
-                                    </button>
-                                    <div class="dropdown-menu">
-                                        <a href="#">2012</a>
-                                        <a href="#">2014</a>
-                                        <a href="#">2015</a>
-                                        <a href="#">2016</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                      <h1>Hasil Perhitungan dengan Metode Profile Matching</h1>
+                      <?php
+                      if($num>0){
+                      ?>
+                       <table class="table table-bordered table-striped table-hover">
+                       <thead>
+                              <tr>
+                                <th class="text-center">#</th>
+                                <th class="text-center">Nama Universitas</th>
+                                <th class="text-center">Ni</th>
+                                <th class="text-center">Ns</th>
+                                <th class="text-center">Np</th>
+                                <th class="text-center">Hasil</th>
+                              </tr>
+                       </thead>
+                       <tbody>
+                      <?php
+                      while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+                      $i++;
+                      extract($row);
+                      ?>
+                      <tr>
+                       <?php echo "<td class='text-center'>{$i}</td>" ?>
+                       <?php echo "<td>{$nama}</td>" ?>
+                       <?php echo "<td class='text-center'>{$Ni}</td>" ?>
+                       <?php echo "<td class='text-center'>{$Ns}</td>" ?>
+                       <?php echo "<td class='text-center'>{$Np}</td>" ?>
+                       <?php echo "<td class='text-center'>{$Hasil}</td>" ?>
+                      </tr>
+                      <?php
+                      }
+                      ?>
+                       </tbody>
+                       </table>
+                      <?php
+                      $page_dom = "index.php";
+                      include_once 'includes/pagination.inc.php';
+                      }
+                      else{
+                      ?>
+                      <div class="alert alert-warning alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                        <strong>Warning!</strong> Data Masih Kosong Tolong Diisi.
+                      </div>
+                      <?php
+                      }
+                      ?>
                         <!-- END EDIT !! -->
                     </div>
                 </div>
