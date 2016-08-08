@@ -1,8 +1,10 @@
 <?php
+
 include_once 'includes/config.php';
 
 $database = new Config();
 $db = $database->getConnection();
+$nama = $database->nama();
 $query = "SELECT keterangan FROM indikator";
 $stmt = $db->prepare( $query );
 $stmt->execute();
@@ -74,7 +76,7 @@ $product = new Data($db, $table);
                                         <ul class="dropdown-menu">
                                             <li>
                                                 <div class="navbar-content">
-                                                    <span>JS Krishna</span>
+                                                    <span> <?php echo $nama; ?></span>
                                                     <p class="text-muted small">
                                                         me@jskrishna.com
                                                     </p>

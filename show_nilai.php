@@ -1,4 +1,5 @@
 <?php
+
 $page = isset($_GET['page']) ? $_GET['page'] : 1;
 
 $records_per_page = 10;
@@ -10,6 +11,7 @@ include_once 'includes/data.inc.php';
 
 $database = new Config();
 $db = $database->getConnection();
+$nama = $database->nama();
 $table = 'universitas';
 $product = new Data($db,$table);
 $query = "SELECT * FROM indikator";
@@ -82,7 +84,7 @@ $i=($page-1)*10;
                                         <ul class="dropdown-menu">
                                             <li>
                                                 <div class="navbar-content">
-                                                    <span>JS Krishna</span>
+                                                    <span> <?php echo $nama; ?></span>
                                                     <p class="text-muted small">
                                                         me@jskrishna.com
                                                     </p>

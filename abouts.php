@@ -1,3 +1,9 @@
+<?php
+include_once 'includes/config.php';
+$database = new Config();
+$db = $database->getConnection();
+$nama = $database->nama();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -57,7 +63,7 @@
                                         <ul class="dropdown-menu">
                                             <li>
                                                 <div class="navbar-content">
-                                                    <span>JS Krishna</span>
+                                                    <span> <?php echo $nama; ?></span>
                                                     <p class="text-muted small">
                                                         me@jskrishna.com
                                                     </p>

@@ -1,4 +1,5 @@
 <?php
+
 $page = isset($_GET['page']) ? $_GET['page'] : 1;
 
 $records_per_page = 10;
@@ -9,6 +10,7 @@ include_once 'includes/config.php';
 include_once 'includes/langkah.inc.php';
 $database = new Config();
 $db = $database->getConnection();
+$nama = $database->nama();
 $table = 'universitas';
 $product = new Langkah($db,$table);
 $stmt = $product->hasil($from_record_num, $records_per_page);
@@ -79,7 +81,7 @@ $i=($page-1)*10;
                                         <ul class="dropdown-menu">
                                             <li>
                                                 <div class="navbar-content">
-                                                    <span>JS Krishna</span>
+                                                    <span><?php echo $nama; ?></span>
                                                     <p class="text-muted small">
                                                         me@jskrishna.com
                                                     </p>

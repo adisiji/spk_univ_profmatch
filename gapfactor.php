@@ -1,7 +1,9 @@
 <?php
+
 include_once 'includes/config.php';
 $database = new Config();
 $db = $database->getConnection();
+$nama = $database->nama();
 $query1 = "SELECT * FROM bobot_gap";
 $query2 = "SELECT * FROM bobot_nilai";
 $query3 = "SELECT i.id,d.keterangan as dim_ind,i.keterangan,i.kelompok FROM indikator i
@@ -79,7 +81,7 @@ $stmt4->execute();
                                         <ul class="dropdown-menu">
                                             <li>
                                                 <div class="navbar-content">
-                                                    <span>JS Krishna</span>
+                                                    <span> <?php echo $nama; ?></span>
                                                     <p class="text-muted small">
                                                         me@jskrishna.com
                                                     </p>
