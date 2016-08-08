@@ -10,12 +10,12 @@ include_once 'includes/data.inc.php';
 
 $database = new Config();
 $db = $database->getConnection();
+$table = 'universitas';
+$product = new Data($db,$table);
 
-$product = new Data($db);
-
-$stmt = $product->readAll($from_record_num, $records_per_page);
+$stmt = $product->show_nilai($from_record_num, $records_per_page);
 $num = $stmt->rowCount();
-$i=0;
+$i=($page-1)*10;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -44,8 +44,8 @@ $i=0;
                     <ul>
                         <li><a href="index.php"><i class="fa fa-home" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Home</span></a></li>
                         <li><a href="add.php"><i class="fa fa-plus" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Tambah Data</span></a></li>
-                        <li class="active"><a href="#"><i class="fa fa-bar-chart" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Data Universitas</span></a></li>
-                        <li><a href="show_nilai.php"><i class="fa fa-table" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Data Penilaian</span></a></li>
+                        <li><a href="show_list.php"><i class="fa fa-bar-chart" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Data Universitas</span></a></li>
+                        <li class="active"><a href="#"><i class="fa fa-table" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Data Penilaian</span></a></li>
                         <li><a href="#"><i class="fa fa-user" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Gap</span></a></li>
                         <li><a href="#"><i class="fa fa-calendar" aria-hidden="true"></i><span class="hidden-xs hidden-sm">About Us</span></a></li>
                         <li><a href="#"><i class="fa fa-cog" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Setting</span></a></li>
@@ -151,10 +151,28 @@ $i=0;
                       <tr>
                        <?php echo "<td>{$i}</td>" ?>
                        <?php echo "<td>{$nama}</td>" ?>
-                       <?php echo "<td width='100px'>
-                           <a class='btn btn-warning btn-sm' href='update.php?id={$id}' role='button'><span class='glyphicon glyphicon-pencil' aria-hidden='true'></span></a>
-                           <a class='btn btn-danger btn-sm' href='delete.php?id={$id}' role='button'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></a>
-                                </td>" ?>
+                       <?php echo "<td>{$i1}</td>" ?>
+                       <?php echo "<td>{$i2}</td>" ?>
+                       <?php echo "<td>{$i3}</td>" ?>
+                       <?php echo "<td>{$i4}</td>" ?>
+                       <?php echo "<td>{$i5}</td>" ?>
+                       <?php echo "<td>{$i6}</td>" ?>
+                       <?php echo "<td>{$i7}</td>" ?>
+                       <?php echo "<td>{$i8}</td>" ?>
+                       <?php echo "<td>{$i9}</td>" ?>
+                       <?php echo "<td>{$i10}</td>" ?>
+                       <?php echo "<td>{$i11}</td>" ?>
+                       <?php echo "<td>{$i12}</td>" ?>
+                       <?php echo "<td>{$i13}</td>" ?>
+                       <?php echo "<td>{$i14}</td>" ?>
+                       <?php echo "<td>{$i15}</td>" ?>
+                       <?php echo "<td>{$i16}</td>" ?>
+                       <?php echo "<td>{$i17}</td>" ?>
+                       <?php echo "<td>{$i18}</td>" ?>
+                       <?php echo "<td>{$i19}</td>" ?>
+                       <?php echo "<td>{$i20}</td>" ?>
+                       <?php echo "<td>{$i21}</td>" ?>
+                       <?php echo "<td>{$i22}</td>" ?>
                       </tr>
                       <?php
                       }

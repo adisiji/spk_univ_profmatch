@@ -15,7 +15,7 @@ $product = new Data($db,$table);
 
 $stmt = $product->readAll($from_record_num, $records_per_page);
 $num = $stmt->rowCount();
-$i=0;
+$i=($page-1)*10;
 ?>
 <!DOCTYPE html>
 <html lang="en">
