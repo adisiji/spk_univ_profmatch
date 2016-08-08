@@ -7,7 +7,7 @@
  // get database connection
  $database = new Config();
  $db = $database->getConnection();
- 
+
  // prepare product object
  $table = 'universitas';
  $product = new Data($db,$table);
@@ -17,7 +17,7 @@
 
  // delete the product
  if($product->delete()){
-  echo "<script>location.href='index.php'</script>";
+  echo "<script>location.href='show_list.php'</script>";
  }
 
  // if unable to delete the product

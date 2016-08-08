@@ -39,9 +39,7 @@ FROM penilaian p
 JOIN universitas u ON p.kd_univ = u.id
 JOIN indikator i ON i.id = p.kd_indikator
 JOIN dim_ind d ON i.dim = d.id
-JOIN bobot_gap bg ON bg.gap=(p.nilai-4)
-
-ORDER BY p.id
+JOIN bobot_gap bg ON p.nilai=(bg.gap+i.nilai)
 
 ============================================
 SHOW NILAI INDIKATOR THOK
@@ -63,15 +61,15 @@ SHOW SECOND CORE FACTOR
 SELECT
   b.nama AS nama,
   c.keterangan as Aspek,
-  SUM(IF(d.kelompok='core',e.bobot,0))/SUM(IF(d.kelompok='core',1,0)) AS core,
-  SUM(IF(d.kelompok='secondary',e.bobot,0))/SUM(IF(d.kelompok='secondary',1,0)) AS secondary
+SUM(IF(d.kelompok='core',e.bobot,0))/SUM(IF(d.kelompok='core',1,0)) AS core,
+SUM(IF(d.kelompok='secondary',e.bobot,0))/SUM(IF(d.kelompok='secondary',1,0)) AS secondary
 FROM penilaian a
 JOIN universitas b ON a.kd_univ = b.id
 JOIN indikator d ON a.kd_indikator = d.id
 JOIN dim_ind c ON d.dim = c.id
-JOIN bobot_gap e ON e.gap=(a.nilai-4)
+JOIN bobot_gap e ON e.gap=(a.nilai-d.nilai)
 GROUP BY b.nama,c.keterangan
-ORDER BY b.nama,c.keterangan
+ORDER BY b.nama,c.keterangan;
 
 ============================================
 
@@ -144,3 +142,5 @@ JOIN indikator i ON i.id = p.kd_indikator
 ORDER BY p.id) x
 group by x.nama
 Order by x.nama;
+
+============================

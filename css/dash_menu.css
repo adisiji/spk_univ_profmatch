@@ -225,7 +225,7 @@ li,ul{
 
 .header-top {
     margin: 0;
-    padding-top: 2px;
+    padding-top: 10px;
 }
 
 .header-top img {
@@ -240,7 +240,8 @@ li,ul{
     color: #ffffff;
     font-size: 14px;
     font-weight: 600;
-    padding: 10px 27px 10px 45px;
+    padding: 10px 27px 10px 30px;
+    vertical-align: middle;
     position: relative;
 }
 
@@ -253,7 +254,6 @@ li,ul{
 .add-project::before {
     background: rgba(0, 0, 0, 0) url("../images/plus.png") no-repeat scroll 0 0;
     content: "";
-    ;
     height: 12px;
     left: 17px;
     position: absolute;

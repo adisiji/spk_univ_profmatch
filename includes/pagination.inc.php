@@ -1,3 +1,4 @@
+<div class="col-md-12 text-center">
 <?php
 // the page where this paging is used
 
@@ -47,3 +48,4 @@ if($page<$total_pages){
 
 echo "</ul></nav>";
 ?>
+</div>

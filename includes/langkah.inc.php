@@ -32,7 +32,7 @@ class Langkah{
     JOIN universitas b ON a.kd_univ = b.id
     JOIN indikator d ON a.kd_indikator = d.id
     JOIN dim_ind c ON d.dim = c.id
-    JOIN bobot_gap e ON e.gap=(a.nilai-4)
+    JOIN bobot_gap e ON a.nilai=(d.nilai+e.gap)
         GROUP BY b.nama, c.keterangan
         ORDER BY b.nama
       ) f

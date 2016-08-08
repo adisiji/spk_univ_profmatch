@@ -25,7 +25,7 @@ $i=($page-1)*10;
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="M Adi Darmawan">
-    <title>SPK Universitas Terbaik</title>
+    <title>SPK Web Universitas Terbaik</title>
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/dash_menu.css" rel="stylesheet">
     <link href="font-awesome-4.6.3/css/font-awesome.min.css" rel="stylesheet">
@@ -46,9 +46,9 @@ $i=($page-1)*10;
                         <li><a href="add.php"><i class="fa fa-plus" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Tambah Data</span></a></li>
                         <li class="active"><a href="#"><i class="fa fa-bar-chart" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Data Universitas</span></a></li>
                         <li><a href="show_nilai.php"><i class="fa fa-table" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Data Penilaian</span></a></li>
-                        <li><a href="gapfactor.php"><i class="fa fa-user" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Gap</span></a></li>
-                        <li><a href="abouts.php"><i class="fa fa-calendar" aria-hidden="true"></i><span class="hidden-xs hidden-sm">About Us</span></a></li>
-                        <li><a href="#"><i class="fa fa-cog" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Setting</span></a></li>
+                        <li><a href="gapfactor.php"><i class="fa fa-cog" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Rules</span></a></li>
+                        <li><a href="abouts.php"><i class="fa fa-user" aria-hidden="true"></i><span class="hidden-xs hidden-sm">About Us</span></a></li>
+
                     </ul>
                 </div>
             </div>
@@ -74,15 +74,8 @@ $i=($page-1)*10;
                         <div class="col-md-5">
                             <div class="header-rightside">
                                 <ul class="list-inline header-top pull-right">
-                                    <li><a href="#"><i class="fa fa-envelope" aria-hidden="true"></i></a></li>
-                                    <li>
-                                        <a href="#" class="icon-info">
-                                            <i class="fa fa-bell" aria-hidden="true"></i>
-                                            <span class="label label-primary">3</span>
-                                        </a>
-                                    </li>
                                     <li class="dropdown">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="http://jskrishna.com/work/merkury/images/user-pic.jpg" alt="user">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user fa-lg" aria-hidden="true"></i>
                                             <b class="caret"></b></a>
                                         <ul class="dropdown-menu">
                                             <li>
@@ -93,7 +86,7 @@ $i=($page-1)*10;
                                                     </p>
                                                     <div class="divider">
                                                     </div>
-                                                    <a href="#" class="view btn-sm active">Log Out</a>
+                                                    <a href="logout.php" class="view btn-sm active">Log Out</a>
                                                 </div>
                                             </li>
                                         </ul>
