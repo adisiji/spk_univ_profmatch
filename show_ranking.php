@@ -7,19 +7,18 @@ $records_per_page = 10;
 $from_record_num = ($records_per_page * $page) - $records_per_page;
 
 include_once 'includes/config.php';
-include_once 'includes/data.inc.php';
-
+include_once 'includes/langkah.inc.php';
 $database = new Config();
 $db = $database->getConnection();
 $nama = $database->nama();
 $email = $database->email();
 $table = 'universitas';
-$product = new Data($db,$table);
-$query = "SELECT * FROM indikator";
+$product = new Langkah($db,$table);
+$stmt = $product->hasil($from_record_num, $records_per_page);
+$num = $stmt->rowCount();
+$query = "SELECT * FROM dim_ind";
 $stmt2 = $db -> prepare($query);
 $stmt2->execute();
-$stmt = $product->show_nilai($from_record_num, $records_per_page);
-$num = $stmt->rowCount();
 $i=($page-1)*10;
 ?>
 <!DOCTYPE html>
@@ -48,10 +47,10 @@ $i=($page-1)*10;
                 <div class="navi">
                     <ul>
                         <li><a href="index.php"><i class="fa fa-home" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Home</span></a></li>
-                        <li><a href="show_ranking.php"><i class="glyphicon glyphicon-star" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Ranking</span></a></li>
+                        <li class="active"><a href="#"><i class="glyphicon glyphicon-star" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Ranking</span></a></li>
                         <li><a href="add.php"><i class="fa fa-plus" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Tambah Data</span></a></li>
                         <li><a href="show_list.php"><i class="fa fa-bar-chart" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Data Universitas</span></a></li>
-                        <li class="active"><a href="#"><i class="fa fa-table" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Data Penilaian</span></a></li>
+                        <li><a href="show_nilai.php"><i class="fa fa-table" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Data Penilaian</span></a></li>
                         <li><a href="gapfactor.php"><i class="fa fa-cog" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Rules</span></a></li>
                         <li><a href="abouts.php"><i class="fa fa-user" aria-hidden="true"></i><span class="hidden-xs hidden-sm">About Us</span></a></li>
 
@@ -73,9 +72,6 @@ $i=($page-1)*10;
                                     </button>
                                 </div>
                             </nav>
-                            <div class="hidden-xs hidden-sm">
-                                <h2>Data Penilaian</h2>
-                            </div>
                         </div>
                         <div class="col-md-5">
                             <div class="header-rightside">
@@ -86,7 +82,7 @@ $i=($page-1)*10;
                                         <ul class="dropdown-menu">
                                             <li>
                                                 <div class="navbar-content">
-                                                    <span> <?php echo $nama; ?></span>
+                                                    <span><?php echo $nama; ?></span>
                                                     <p class="text-muted small">
                                                         <?php echo $email; ?>
                                                     </p>
@@ -107,22 +103,24 @@ $i=($page-1)*10;
                   <div class="modal-content">
                         <div class="modal-header login-header">
                             <button type="button" class="close" data-dismiss="modal">×</button>
-                            <h4 class="modal-title">Indikator</h4>
+                            <h4 class="modal-title">Keterangan</h4>
                         </div>
                       <div class="modal-body">
                           <div class="row">
                                 <div class="well">
                                   <ul class="list-unstyled" style="line-height: 2">
                                     <?php
-                                    while ($rox=$stmt2->fetch(PDO::FETCH_ASSOC)){
-                                    extract($rox);
+                                    $rox=$stmt2->fetchall(PDO::FETCH_COLUMN,1);
                                     ?>
                                       <li><span class='fa fa-check text-success'></span>
-                                        <?php echo "i{$id} : {$keterangan}"; ?>
+                                        <?php echo "Ni : Aspek $rox[0]"; ?>
                                       </li>
-                                      <?php
-                                      }
-                                      ?>
+                                      <li><span class='fa fa-check text-success'></span>
+                                        <?php echo "Ns : Aspek $rox[1]"; ?>
+                                      </li>
+                                      <li><span class='fa fa-check text-success'></span>
+                                        <?php echo "Np : Aspek $rox[2]"; ?>
+                                      </li>
                                   </ul>
                               </div>
                       </div>
@@ -138,37 +136,19 @@ $i=($page-1)*10;
                     <div class="row">
                       <!--isi nyda tari di bawah-->
                       <!-- EDIT HERE-->
+                      <h1>Hasil Perhitungan dengan Metode Profile Matching dan WebQual</h1>
                       <?php
                       if($num>0){
                       ?>
                        <table class="table table-bordered table-striped table-hover">
-                       <caption>Data Nilai Universitas</caption>
                        <thead>
                               <tr>
                                 <th class="text-center">#</th>
-                                <th class="text-center">Nama universitas</th>
-                                <th class="text-center">i1</th>
-                                <th class="text-center">i2</th>
-                                <th class="text-center">i3</th>
-                                <th class="text-center">i4</th>
-                                <th class="text-center">i5</th>
-                                <th class="text-center">i6</th>
-                                <th class="text-center">i7</th>
-                                <th class="text-center">i8</th>
-                                <th class="text-center">i9</th>
-                                <th class="text-center">i10</th>
-                                <th class="text-center">i11</th>
-                                <th class="text-center">i12</th>
-                                <th class="text-center">i13</th>
-                                <th class="text-center">i14</th>
-                                <th class="text-center">i15</th>
-                                <th class="text-center">i16</th>
-                                <th class="text-center">i17</th>
-                                <th class="text-center">i18</th>
-                                <th class="text-center">i19</th>
-                                <th class="text-center">i20</th>
-                                <th class="text-center">i21</th>
-                                <th class="text-center">i22</th>
+                                <th class="text-center">Nama Universitas</th>
+                                <th class="text-center">Ni</th>
+                                <th class="text-center">Ns</th>
+                                <th class="text-center">Np</th>
+                                <th class="text-center">Hasil</th>
                               </tr>
                        </thead>
                        <tbody>
@@ -178,30 +158,12 @@ $i=($page-1)*10;
                       extract($row);
                       ?>
                       <tr>
-                       <?php echo "<td>{$i}</td>" ?>
+                       <?php echo "<td class='text-center'>{$i}</td>" ?>
                        <?php echo "<td>{$nama}</td>" ?>
-                       <?php echo "<td>{$i1}</td>" ?>
-                       <?php echo "<td>{$i2}</td>" ?>
-                       <?php echo "<td>{$i3}</td>" ?>
-                       <?php echo "<td>{$i4}</td>" ?>
-                       <?php echo "<td>{$i5}</td>" ?>
-                       <?php echo "<td>{$i6}</td>" ?>
-                       <?php echo "<td>{$i7}</td>" ?>
-                       <?php echo "<td>{$i8}</td>" ?>
-                       <?php echo "<td>{$i9}</td>" ?>
-                       <?php echo "<td>{$i10}</td>" ?>
-                       <?php echo "<td>{$i11}</td>" ?>
-                       <?php echo "<td>{$i12}</td>" ?>
-                       <?php echo "<td>{$i13}</td>" ?>
-                       <?php echo "<td>{$i14}</td>" ?>
-                       <?php echo "<td>{$i15}</td>" ?>
-                       <?php echo "<td>{$i16}</td>" ?>
-                       <?php echo "<td>{$i17}</td>" ?>
-                       <?php echo "<td>{$i18}</td>" ?>
-                       <?php echo "<td>{$i19}</td>" ?>
-                       <?php echo "<td>{$i20}</td>" ?>
-                       <?php echo "<td>{$i21}</td>" ?>
-                       <?php echo "<td>{$i22}</td>" ?>
+                       <?php echo "<td class='text-center'>{$Ni}</td>" ?>
+                       <?php echo "<td class='text-center'>{$Ns}</td>" ?>
+                       <?php echo "<td class='text-center'>{$Np}</td>" ?>
+                       <?php echo "<td class='text-center'>{$Hasil}</td>" ?>
                       </tr>
                       <?php
                       }
@@ -209,11 +171,10 @@ $i=($page-1)*10;
                        </tbody>
                        </table>
                        <div class="hidden-xs">
-                         <a href="#" class="add-project" data-toggle="modal" data-target="#show-indikator">Indikator</a>
+                         <a href="#" class="add-project" data-toggle="modal" data-target="#show-indikator">Keterangan</a>
                        </div>
-
                       <?php
-                      $page_dom = "show_nilai.php";
+                      $page_dom = "show_ranking.php";
                       include_once 'includes/pagination.inc.php';
                       }
                       else{
@@ -225,14 +186,43 @@ $i=($page-1)*10;
                       <?php
                       }
                       ?>
+                        <!-- END EDIT !! -->
                     </div>
+                </div>
+            </div>
+        </div>
 
-                  </div>
+    </div>
 
-                    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-                    <script src="js/jquery-3.1.0.min.js"></script>
-                    <!-- Include all compiled plugins (below), or include individual files as needed -->
-                    <script src="js/bootstrap.min.js"></script>
-                    <script src="js/dash_menu.js"></script>
-                  </body>
-                </html>
+
+
+    <!-- Modal -->
+    <div id="add_project" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header login-header">
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                    <h4 class="modal-title">Add Project</h4>
+                </div>
+                <div class="modal-body">
+                            <input type="text" placeholder="Project Title" name="name">
+                            <input type="text" placeholder="Post of Post" name="mail">
+                            <input type="text" placeholder="Author" name="passsword">
+                            <textarea placeholder="Desicrption"></textarea>
+                    </div>
+                <div class="modal-footer">
+                    <button type="button" class="cancel" data-dismiss="modal">Close</button>
+                    <button type="button" class="add-project" data-dismiss="modal">Save</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="js/jquery-3.1.0.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/dash_menu.js"></script>
+</body>
+</html>

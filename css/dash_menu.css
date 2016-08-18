@@ -1,6 +1,21 @@
 /*Main CSS*/
 
+.custom-bullet li {
+    display: block;
+}
 
+.custom-bullet li:before
+{
+    /*Using a Bootstrap glyphicon as the bullet point*/
+    content: "\e080";
+    font-family: 'Glyphicons Halflings';
+    font-size: 9px;
+    float: left;
+    margin-top: 4px;
+    margin-right: 4px;
+    margin-left: 15px;
+    color: #5584ff;
+}
 /*Login Signup Page*/
 a:focus,a:hover,a{
     outline:none;
@@ -357,6 +372,7 @@ header {
 }
 
 .navi a {
+
     border-bottom: 1px solid #0d172e;
     border-top: 1px solid #0d172e;
     color: #ffffff;
@@ -368,6 +384,7 @@ header {
 }
 
 .navi i {
+
     margin-right: 15px;
     color: #5584ff;
 }

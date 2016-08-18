@@ -4,9 +4,10 @@ include_once 'includes/config.php';
 $database = new Config();
 $db = $database->getConnection();
 $nama = $database->nama();
+$email = $database->email();
 $query1 = "SELECT * FROM bobot_gap";
 $query2 = "SELECT * FROM bobot_nilai";
-$query3 = "SELECT i.id,d.keterangan as dim_ind,i.keterangan,i.kelompok FROM indikator i
+$query3 = "SELECT i.id,d.keterangan as dim_ind,i.keterangan,i.kelompok,i.nilai FROM indikator i
            JOIN dim_ind d ON i.dim=d.id";
 $query4 = "SELECT * FROM dim_ind";
 $stmt = $db->prepare( $query1 );
@@ -30,6 +31,7 @@ $stmt4->execute();
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/dash_menu.css" rel="stylesheet">
     <link href="font-awesome-4.6.3/css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/bootstrap-editable.css" rel="stylesheet">
 </head>
 
 <body class="home">
@@ -44,6 +46,7 @@ $stmt4->execute();
                 <div class="navi">
                     <ul>
                         <li><a href="index.php"><i class="fa fa-home" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Home</span></a></li>
+                        <li><a href="show_ranking.php"><i class="glyphicon glyphicon-star" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Ranking</span></a></li>
                         <li><a href="add.php"><i class="fa fa-plus" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Tambah Data</span></a></li>
                         <li><a href="show_list.php"><i class="fa fa-bar-chart" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Data Universitas</span></a></li>
                         <li><a href="show_nilai.php"><i class="fa fa-table" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Data Penilaian</span></a></li>
@@ -83,7 +86,7 @@ $stmt4->execute();
                                                 <div class="navbar-content">
                                                     <span> <?php echo $nama; ?></span>
                                                     <p class="text-muted small">
-                                                        me@jskrishna.com
+                                                        <?php echo $email; ?>
                                                     </p>
                                                     <div class="divider">
                                                     </div>
@@ -121,7 +124,7 @@ $stmt4->execute();
                                <tr>
                                 <?php echo "<td>{$id}</td>" ?>
                                 <?php echo "<td>{$keterangan}</td>" ?>
-                                <?php echo "<td>{$prosentase}</td>"?>
+                                <?php echo "<td><span class= 'xedit' id='{$id}' namacol='prosentase' nam_tab='dim_ind'>{$prosentase}</span></td>"?>
                                </tr>
                                <?php
                                }
@@ -140,6 +143,7 @@ $stmt4->execute();
                                          <th class="text-center">Dimensi Indikator</th>
                                          <th class="text-center">Keterangan</th>
                                          <th class="text-center">Kelompok</th>
+                                         <th class="text-center">Nilai</th>
                                        </tr>
                                 </thead>
                                 <tbody>
@@ -151,7 +155,8 @@ $stmt4->execute();
                                 <?php echo "<td>{$id}</td>" ?>
                                 <?php echo "<td>{$dim_ind}</td>" ?>
                                 <?php echo "<td>{$keterangan}</td>"?>
-                                <?php echo "<td>{$kelompok}</td>"?>
+                                <?php echo "<td><span class='kel' data-type='select' data-title='Pilih Kelompok' id='{$id}' namacol='kelompok' nam_tab='indikator'>{$kelompok}</span></td>"?>
+                                <?php echo "<td><span class= 'xedit' id='{$id}' namacol='nilai' nam_tab='indikator'>{$nilai}</span></td>"?>
                                </tr>
                                <?php
                                }
@@ -163,7 +168,7 @@ $stmt4->execute();
                     </div>
                     <div class="row">
                     <div class="col-md-5 col-sm-5 col-xs-12 gutter">
-                          <div class="bobot nilai">
+                          <div class="bobot_nilai">
                               <h2>Bobot Nilai</h2>
                               <table class="table table-bordered table-hover table-striped">
                               <thead>
@@ -189,7 +194,7 @@ $stmt4->execute();
                           </div>
                       </div>
                       <div class="col-md-5 col-sm-5 col-xs-12 gutter">
-                          <div class="bobot gap">
+                          <div class="bobot_gap">
                               <h2>Bobot Gap</h2>
                               <table class="table table-bordered table-hover table-striped">
                               <thead>
@@ -207,8 +212,8 @@ $stmt4->execute();
                              ?>
                              <tr>
                               <?php echo "<td>{$id}</td>" ?>
-                              <?php echo "<td>{$gap}</td>" ?>
-                              <?php echo "<td>{$bobot}</td>"?>
+                              <?php echo "<td><span class= 'xedit' id='{$id}' namacol='gap' nam_tab='bobot_gap'>{$gap}</span></td>" ?>
+                              <?php echo "<td><span class= 'gap' data-type='select' id='{$id}' namacol='bobot' nam_tab='bobot_gap'>{$bobot}</span></td>"?>
                               <?php echo "<td>{$keterangan}</td>"?>
                              </tr>
                              <?php
@@ -226,6 +231,7 @@ $stmt4->execute();
 
     <script src="js/jquery-3.1.0.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/bootstrap-editable.js"></script>
     <script src="js/dash_menu.js"></script>
 </body>
 </html>

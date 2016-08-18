@@ -5,6 +5,7 @@ include_once 'includes/config.php';
 $database = new Config();
 $db = $database->getConnection();
 $nama = $database->nama();
+$email = $database->email();
 $query = "SELECT keterangan FROM indikator";
 $stmt = $db->prepare( $query );
 $stmt->execute();
@@ -40,6 +41,7 @@ $product = new Data($db, $table);
                 <div class="navi">
                     <ul>
                         <li><a href="index.php"><i class="fa fa-home" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Home</span></a></li>
+                        <li><a href="show_ranking.php"><i class="glyphicon glyphicon-star" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Ranking</span></a></li>
                         <li class="active"><a href="#"><i class="fa fa-plus" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Tambah Data</span></a></li>
                         <li><a href="show_list.php"><i class="fa fa-bar-chart" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Data Universitas</span></a></li>
                         <li><a href="show_nilai.php"><i class="fa fa-table" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Data Penilaian</span></a></li>
@@ -78,7 +80,7 @@ $product = new Data($db, $table);
                                                 <div class="navbar-content">
                                                     <span> <?php echo $nama; ?></span>
                                                     <p class="text-muted small">
-                                                        me@jskrishna.com
+                                                        <?php echo $email; ?>
                                                     </p>
                                                     <div class="divider">
                                                     </div>
@@ -149,7 +151,7 @@ $product = new Data($db, $table);
                     <input type="text" class="form-control" id="nm" placeholder = "Nama Universitas" name="nm">
                   </div>
 
-
+    <p>Keterangan :</br> 1: sangat buruk, 2: buruk, 3: cukup, 4: baik, 5: sangat baik</p>
    <div class = "form-group" id="i1">
    <p><?php echo '1. '.$quest[0] ?></p>
    <div class = "radio radio-inline">

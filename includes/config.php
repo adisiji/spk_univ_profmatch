@@ -6,7 +6,7 @@ class Config{
  private $db_name = "spk_univ";
  private $username= "root";
  private $password= "";
- public $nama;
+ public $nama, $email;
  public $conn;
 
  // get the database connection
@@ -18,20 +18,27 @@ class Config{
    $this->conn = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->db_name, $this->username, $this->password);
    $db = $this->conn;
    session_start();
+
    if(session_status() == PHP_SESSION_NONE ){
    	mysqli_close($connection); // Menutup koneksi
-   	header('Location: ../login/index.php'); // Mengarahkan ke Login Page
+   	header('Location: /login/index.php'); // Mengarahkan ke Login Page
     exit;
    }
-   else if(session_status() == PHP_SESSION_ACTIVE){
+   else if(session_status() == PHP_SESSION_ACTIVE && isset($_SESSION['login_user'])){
      $user_check=$_SESSION['login_user'];
      // Ambil nama karyawan berdasarkan username karyawan dengan mysql_fetch_assoc
-     $query1= "select user_name from tbl_users where user_name='$user_check'";
+     $query1= "select * from tbl_users where user_name='$user_check'";
      $stmt = $db -> prepare($query1);
      $stmt-> execute();
      $row   = $stmt->fetch(PDO::FETCH_ASSOC);
      $login_session = $row['user_name'];
      $this->nama = $login_session;
+     $this->email = $row['user_email'];
+   }
+   else {
+     mysqli_close($connection); // Menutup koneksi
+    	header('Location: /login/index.php'); // Mengarahkan ke Login Page
+     exit;
    }
   }catch(PDOException $exception){
    echo "Connection error: " . $exception->getMessage();
@@ -42,6 +49,9 @@ class Config{
 
  public function nama(){
    return $this->nama;
+ }
+ public function email(){
+   return $this->email;
  }
 }
 ?>

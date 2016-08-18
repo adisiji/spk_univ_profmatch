@@ -77,7 +77,7 @@ HASIL !!
 
 SELECT
   f.nama,
-  SUM(IF(f.id_aspek=1,f.nilai,0)) AS Ni,
+  SUM(IF(f.id_aspek=1,f.nilai,0)) AS Nm,
   SUM(IF(f.id_aspek=2,f.nilai,0)) AS Ns,
   SUM(IF(f.id_aspek=3,f.nilai,0)) AS Np,
   (

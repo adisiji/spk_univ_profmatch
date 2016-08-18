@@ -1,0 +1,7 @@
+.valign {
+    display: flex;
+    align-items: center;
+}
+.row.extra-bottom-padding{
+   margin-bottom: 20px;
+}

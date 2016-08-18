@@ -3,6 +3,7 @@ include_once 'includes/config.php';
 $database = new Config();
 $db = $database->getConnection();
 $nama = $database->nama();
+$email = $database->email();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,6 +16,7 @@ $nama = $database->nama();
     <title>SPK Web Universitas Terbaik</title>
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/dash_menu.css" rel="stylesheet">
+    <link href="css/margin.css" rel="stylesheet">
     <link href="font-awesome-4.6.3/css/font-awesome.min.css" rel="stylesheet">
 </head>
 
@@ -23,13 +25,14 @@ $nama = $database->nama();
         <div class="row display-table-row">
             <div class="col-md-2 col-sm-1 hidden-xs display-table-cell v-align box" id="navigation">
                 <div class="logo">
-                    <a hef="home.html"><img src="http://jskrishna.com/work/merkury/images/logo.png" alt="merkery_logo" class="hidden-xs hidden-sm">
+                    <a hef="index.php"><img src="http://jskrishna.com/work/merkury/images/logo.png" alt="merkery_logo" class="hidden-xs hidden-sm">
                         <img src="http://jskrishna.com/work/merkury/images/circle-logo.png" alt="merkery_logo" class="visible-xs visible-sm circle-logo">
                     </a>
                 </div>
                 <div class="navi">
                     <ul>
                         <li ><a href="index.php"><i class="fa fa-home" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Home</span></a></li>
+                        <li><a href="show_ranking.php"><i class="glyphicon glyphicon-star" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Ranking</span></a></li>
                         <li><a href="add.php"><i class="fa fa-plus" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Tambah Data</span></a></li>
                         <li><a href="show_list.php"><i class="fa fa-bar-chart" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Data Universitas</span></a></li>
                         <li><a href="show_nilai.php"><i class="fa fa-table" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Data Penilaian</span></a></li>
@@ -42,6 +45,7 @@ $nama = $database->nama();
                 <!--<button type="button" class="slide-toggle">Slide Toggle</button> -->
                 <div class="row">
                     <header>
+
                         <div class="col-md-7">
                             <nav class="navbar-default pull-left">
                                 <div class="navbar-header">
@@ -53,6 +57,9 @@ $nama = $database->nama();
                                     </button>
                                 </div>
                             </nav>
+                            <div class="hidden-xs hidden-sm">
+                                <h2>Tentang Kami</h2>
+                            </div>
                         </div>
                         <div class="col-md-5">
                             <div class="header-rightside">
@@ -65,7 +72,7 @@ $nama = $database->nama();
                                                 <div class="navbar-content">
                                                     <span> <?php echo $nama; ?></span>
                                                     <p class="text-muted small">
-                                                        me@jskrishna.com
+                                                        <?php echo $email; ?>
                                                     </p>
                                                     <div class="divider">
                                                     </div>
@@ -82,12 +89,31 @@ $nama = $database->nama();
                 <div class="user-dashboard">
                     <div class="container-fluid xyz">
                     <div class="row">
-                      <!--isi nyda tari di bawah-->
-                      <!-- EDIT HERE-->
-                      <h1>SPK Web Universitas Terbaik</h1>
-                        <p>Sistem Penunjang Keputusan berbasis Web menggunakan metode Profile Matching.</br>
-                        </p>
-                        <!-- END EDIT !! -->
+                       <p>Sistem Penunjang Keputusan berbasis Web menggunakan metode Profile Matching.</p>
+                    </div>
+                    <div class="row extra-bottom-padding valign">
+                        <div class="col-xs-6 col-md-4">
+                          <img src="img/cats_me.jpg" class="img-responsive img-circle" alt="Cinque Terre">
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-8">Muhammad Adi Darmawan</div>
+                    </div>
+                    <div class="row extra-bottom-padding valign">
+                        <div class="col-xs-6 col-md-4">
+                          <img src="img/cats_me.jpg" class="img-responsive img-circle" alt="Cinque Terre">
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-8">Muhammad Fauzan </div>
+                    </div>
+                    <div class="row extra-bottom-padding valign">
+                        <div class="col-xs-6 col-md-4">
+                          <img src="img/cats_me.jpg" class="img-responsive img-circle" alt="Cinque Terre">
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-8">Aullia Nur Sakinah</div>
+                    </div>
+                    <div class="row extra-bottom-padding valign">
+                        <div class="col-xs-6 col-md-4">
+                          <img src="img/cats_me.jpg" class="img-responsive img-circle" alt="Cinque Terre">
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-8">Aninda Restu Utami</div>
                     </div>
                 </div>
             </div>

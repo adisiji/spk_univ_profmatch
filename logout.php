@@ -2,6 +2,6 @@
 session_start();
 if(session_destroy()) // Menghapus Sessions
 {
-	header("Location: ../login/index.php"); // Langsung mengarah ke Home index.php
+	header("Location: login/index.php"); // Langsung mengarah ke Home index.php
 }
 ?>
